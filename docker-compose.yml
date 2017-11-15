@@ -1,0 +1,30 @@
+# docker-compose.yml
+
+demo-app:
+  build: ./demo
+  container_name: demo-app
+  environment:
+    - DB_NAME=demodb
+    - DB_HOST=mysql
+    - DB_USERNAME=root
+    - DB_PASSWORD=pwd
+    - DOMAIN=http://localhost
+
+    # can use 'rails secret 
+    # - SECRET_KEY_BASE=2e7b9f8c230940cf9b5bb441c030a871779b26f9d2262c5be763ce29e419614f7cf9041922b28a061417da441a7c7cee88f0841f21ff90d56bf255abe25167fe
+  ports:
+    - "80:80"
+  volumes:
+    - ./demo/app:/home/app/webapp/app
+    - ./log:/home/app/webapp/log
+  links:
+    - demo-mysql:mysql
+demo-mysql:
+  image: mysql
+  container_name: demo-mysql
+  ports:
+    - "4001:3306"
+  volumes:
+    - ./db:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=password
