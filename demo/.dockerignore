@@ -1,0 +1,9 @@
+.git
+.dockerignore
+Dockerfile
+doc
+factories
+log/*
+docker/*
+test
+README.md
